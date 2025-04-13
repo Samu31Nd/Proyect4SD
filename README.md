@@ -9,7 +9,8 @@ Welcome to the VS Code Java world. Here is a guideline to help you get started t
 ## How to run?
 
 ``` bash
-
+make
+make run
 ```
 
 ## Folder Structure
