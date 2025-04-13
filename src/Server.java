@@ -61,20 +61,16 @@ public class Server {
                             + getAuthor(bookName) + " se encontró la oración:" + ANSI_RESET + "\n" +
                             "[Pagina " + pag + "]\n");
 
-                    // ✨ Aquí va el reemplazo de splitWithDelimiters
                     String parrafoPlano = parrafos[i].replace("\n", " ");
                     Pattern pattern = Pattern.compile("(?i)\\b" + Pattern.quote(searchingWord));
                     Matcher matcher = pattern.matcher(parrafoPlano);
                     int lastEnd = 0;
 
                     while (matcher.find()) {
-                        // texto antes de la palabra encontrada
                         result.append(parrafoPlano, lastEnd, matcher.start());
-                        // palabra resaltada
                         result.append(ANSI_YELLOW).append(parrafoPlano, matcher.start(), matcher.end()).append(ANSI_RESET);
                         lastEnd = matcher.end();
                     }
-                    // texto restante después de la última coincidencia
                     result.append(parrafoPlano.substring(lastEnd));
 
                     try {
