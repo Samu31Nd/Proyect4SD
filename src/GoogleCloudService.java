@@ -1,16 +1,22 @@
+/*
+ * Proyecto no.4
+ * Sanchez Leyva Eduardo Samuel
+ * Grupo 7CM2 Sistemas Distribuidos
+ */
+
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
+import java.net.URI;
+import java.util.List;
+import java.net.URLEncoder;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URI;
-import java.net.URLEncoder;
+import java.util.Properties;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
-import java.util.List;
-import java.util.Properties;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;

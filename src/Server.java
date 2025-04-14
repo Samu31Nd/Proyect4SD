@@ -1,11 +1,17 @@
+/*
+ * Proyecto no.4
+ * Sanchez Leyva Eduardo Samuel
+ * Grupo 7CM2 Sistemas Distribuidos
+ */
+
 import java.io.File;
 import java.util.List;
 import java.util.HashMap;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.apache.pdfbox.Loader;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -131,13 +137,24 @@ public class Server {
         StringBuilder result = new StringBuilder();
         List<BucketItem> bucketFiles = cloudOperations.listBucket();
         for (BucketItem book : bucketFiles) {
-            String nameBook = getTitle(book.name.split("/")[1]);
+            String nameBook = getTitle(book.name.split("/",2)[1]);
             String authorBook = getAuthor(book.name.split("/",2)[1]);
             if(! (nameBook.toLowerCase().contains(title.toLowerCase())) ||
-             !(authorBook.toLowerCase().contains(author.toLowerCase())) )
-                continue;
+            !(authorBook.toLowerCase().contains(author.toLowerCase())) )
+            continue;
             cloudOperations.downloadBook(book);
             result.append(searchPatternInBook(book.name, word));
+        }
+        return result.toString();
+    }
+    
+    public static String getAllBooks() throws IOException, InterruptedException {
+        StringBuilder result = new StringBuilder();
+        List<BucketItem> bucketFiles = cloudOperations.listBucket();
+        for (BucketItem book : bucketFiles) {
+            String nameBook = getTitle(book.name.split("/",2)[1]);
+            String authorBook = getAuthor(book.name.split("/",2)[1]);
+            result.append("\t" + nameBook +  " - " + authorBook + "\n");
         }
         return result.toString();
     }

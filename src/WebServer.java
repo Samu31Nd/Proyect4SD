@@ -1,16 +1,23 @@
+/*
+ * Proyecto no.4
+ * Sanchez Leyva Eduardo Samuel
+ * Grupo 7CM2 Sistemas Distribuidos
+ */
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.util.concurrent.Executors;
 
+import com.sun.net.httpserver.HttpServer;
 import com.sun.net.httpserver.HttpContext;
 import com.sun.net.httpserver.HttpExchange;
-import com.sun.net.httpserver.HttpServer;
 
 public class WebServer {
     
     private static final String TASK_SEARCH_WORD_ALL_FILES  = "/search";
     private static final String TASK_SEARCH_WORD_FILE_PATTERN = "/searchWithFilter";
+    private static final String TASK_LIST_BOOKS = "/list";
 
     private final int port;
     private HttpServer server;
@@ -38,8 +45,10 @@ public class WebServer {
         }
         HttpContext searchAllFilesContext = server.createContext(TASK_SEARCH_WORD_ALL_FILES);
         HttpContext searchFilePatternContext = server.createContext(TASK_SEARCH_WORD_FILE_PATTERN);
+        HttpContext listAllBooksContext = server.createContext(TASK_LIST_BOOKS);
         searchAllFilesContext.setHandler(this::handleSearchAllFiles);
         searchFilePatternContext.setHandler(this::handleSearchFilePattern);
+        listAllBooksContext.setHandler(this::handleListBooks);
         server.setExecutor(Executors.newFixedThreadPool(4));
         server.start();
     }
@@ -88,6 +97,20 @@ public class WebServer {
             e.printStackTrace();
         }
         sendResponse(responseMessage.getBytes(), exchange);
+    }
+
+    private void handleListBooks(HttpExchange exchange) throws IOException{
+        if(!exchange.getRequestMethod().equalsIgnoreCase("get")){
+            exchange.close();
+            return;
+        }
+        String response = "Libros disponibles:\n\n";
+        try {
+            response += Server.getAllBooks();
+        } catch(IOException | InterruptedException e){
+            e.printStackTrace();
+        }
+        sendResponse(response.getBytes(), exchange);
     }
 
     private void sendResponse(byte[] responseBytes, HttpExchange exchange) throws IOException {

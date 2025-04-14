@@ -1,4 +1,19 @@
-# Makefile para proyecto Java
+ #
+ # Proyecto no.4
+ # Sanchez Leyva Eduardo Samuel
+ # Grupo 7CM2 Sistemas Distribuidos
+ #
+
+ # Estructura
+ # ./
+ # ./bin
+ # ./lib/*.jar
+ # ./src/*.java
+ # ./.env -> Archivo con el token y la api key
+ #         Ejemplo de .env:
+ #           GOOGLE_TOKEN=<Tu token>
+ #           TRANSLATE_API_KEY=<Tu API key privada>
+ # ./makefile (este archivo)
 
 SRC_DIR := src
 BIN_DIR := bin
